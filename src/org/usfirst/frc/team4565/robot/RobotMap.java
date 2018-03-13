@@ -14,6 +14,7 @@ package org.usfirst.frc.team4565.robot;
  * floating around.
  */
 public class RobotMap {
+	public static final String robotType = "competition";
     //User controllers
 	public static final int primaryJoystickPort = 0,
 							secondaryJoystickPort = 1;
@@ -35,21 +36,21 @@ public class RobotMap {
                                driverClawDeadband = .1,
                                boostDisabledMultiplier = .5,
                                boostEnabledMultiplier = 1;
-	//Bottom claw variables
+	//Bottom claw ports
 	public static final int bottomClawSolenoidPort0 = 7,
 							bottomClawSolenoidPort1 = 0,
 							bottomClawPitchControlPort = 2;
-	//Top claw variables
+	//Top claw ports
 	public static final int topClawSolenoidPort0 = 6,
 							topClawSolenoidPort1 = 1,
 							topClawPitchControlPort = 3;
+    //Winch ports
+    public static final int winchPort = 7,
+    						winchArmPort = 6;
 	//Winch variables
     public static final double winchPower = 1,
     						   winchArmMultiplier = .75,
     						   winchArmDeadband = .2;
-    //Winch ports
-    public static final int winchPort = 7,
-    						winchArmPort = 6;
     //Auto config
     public static final double autoStraightSpeed = .4,
     						   autoTurnSpeed = .4,
