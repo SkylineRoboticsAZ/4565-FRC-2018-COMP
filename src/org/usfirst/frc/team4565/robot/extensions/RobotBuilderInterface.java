@@ -7,9 +7,9 @@ import org.usfirst.frc.team4565.robot.subsystems.WinchArm;
 
 public interface RobotBuilderInterface {
 
-	public void initDriveTrain(DriveTrain driveTrain);
-	public void initTopClaw(Claw topClaw);
-	public void initBottomClaw(Claw bottomClaw);
-	public void initWinch(Winch winch);
-	public void initWinchArm(WinchArm winchArm);
+	public DriveTrain initDriveTrain();
+	public Claw initTopClaw();
+	public Claw initBottomClaw();
+	public Winch initWinch();
+	public WinchArm initWinchArm();
 }

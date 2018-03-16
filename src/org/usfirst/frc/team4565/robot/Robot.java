@@ -12,8 +12,10 @@ import org.usfirst.frc.team4565.robot.subsystems.Claw;
 import org.usfirst.frc.team4565.robot.subsystems.Winch;
 import org.usfirst.frc.team4565.robot.subsystems.WinchArm;
 import org.usfirst.frc.team4565.robot.extensions.RobotBuilderInterface;
+import org.usfirst.frc.team4565.robot.commands.auto.DriveStraight;
 import org.usfirst.frc.team4565.robot.commands.auto.MiddleSwitchAuto;
 import org.usfirst.frc.team4565.robot.commands.auto.StraightAuto;
+import org.usfirst.frc.team4565.robot.commands.auto.TurnDegrees;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -32,7 +34,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Robot extends TimedRobot {
 	
 	private enum Auto {
-		NoAuto, LeftSide, RightSide, Middle
+		NoAuto, LeftSide, RightSide, Middle, TestAuto
 	}
 	
 	public static DriveTrain kDriveTrain;
@@ -54,19 +56,24 @@ public class Robot extends TimedRobot {
 	public void robotInit() {
 		RobotBuilderInterface robotBuilder = getRobotBuilder(RobotMap.robotType);
 		
+		if (robotBuilder == null)
+			System.out.println("ERROR! Invalid robot type");
+		
 		//Initialize subsystems
-		robotBuilder.initDriveTrain(kDriveTrain);
-		robotBuilder.initTopClaw(kTopClaw);
-		robotBuilder.initBottomClaw(kBottomClaw);
-		robotBuilder.initWinch(kWinch);
-		robotBuilder.initWinchArm(kWinchArm);
-		kOi = new OI();
+		kDriveTrain = robotBuilder.initDriveTrain();
+		kTopClaw = robotBuilder.initTopClaw();
+		kBottomClaw = robotBuilder.initBottomClaw();
+		kWinch = robotBuilder.initWinch();
+		kWinchArm = robotBuilder.initWinchArm();
 		
 		kDriveTrain.setName("DriveTrain");
 		kTopClaw.setName("topClaw");
 		kBottomClaw.setName("BottomClaw");
 		kWinch.setName("Winch");
 		kWinchArm.setName("WinchArm");
+		
+		kOi = new OI();
+		kOi.init();
 		
 		kOi.registerDevice(kDriveTrain.getName(), true);
 		kOi.registerDevice(kTopClaw.getName(), false);
@@ -78,6 +85,7 @@ public class Robot extends TimedRobot {
 		m_chooser.addObject("Left Drive Straight", Auto.LeftSide);
 		m_chooser.addObject("Right Drive Straight", Auto.RightSide);
 		m_chooser.addObject("Middle Auto", Auto.Middle);
+		m_chooser.addObject("Test Auto", Auto.TestAuto);
 		SmartDashboard.putData("Auto Selection", m_chooser);
 	}
 
@@ -125,6 +133,9 @@ public class Robot extends TimedRobot {
 			m_autoCommand = new MiddleSwitchAuto(kDriveTrain, kBottomClaw);
 			((MiddleSwitchAuto)m_autoCommand).init(gameData);
 			break;
+		case TestAuto:
+			m_autoCommand = new DriveStraight(kDriveTrain, 5);
+			break;
 		default:
 			m_autoCommand = null;
 			break;
@@ -163,8 +174,6 @@ public class Robot extends TimedRobot {
 		// this line or comment it out.
 		if (m_autoCommand != null)
 			m_autoCommand.cancel();
-		
-		kOi.init();
 	}
 
 	/**
@@ -183,9 +192,9 @@ public class Robot extends TimedRobot {
 	}
 	
 	private RobotBuilderInterface getRobotBuilder(String robotType) {
-		if (robotType == "practice")
+		if (robotType.equals("practice"))
 			return new PracticeRobotBuilder();
-		else if (robotType == "competition")
+		else if (robotType.equals("competition"))
 			return new CompRobotBuilder();
 		
 		return null;

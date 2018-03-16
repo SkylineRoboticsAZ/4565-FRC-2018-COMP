@@ -14,7 +14,7 @@ import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 public class CompRobotBuilder implements RobotBuilderInterface {
 	
 	@Override
-	public void initDriveTrain(DriveTrain driveTrain) {		
+	public DriveTrain initDriveTrain() {		
 		//Create all the motor controller objects
 		TalonSRXWrapper leftFrontMotor = new TalonSRXWrapper(RobotMap.leftFrontDriveMotor);
 		TalonSRXWrapper leftBackMotor = new TalonSRXWrapper(RobotMap.leftBackDriveMotor);
@@ -30,42 +30,47 @@ public class CompRobotBuilder implements RobotBuilderInterface {
 		Encoder rightEncoder = new Encoder(RobotMap.rightEncoderPort0, RobotMap.rightEncoderPort1, false, EncodingType.k4X);
 		
 		//Create the DriveTrain subsystem
-		driveTrain = new DriveTrain();
+		DriveTrain driveTrain = new DriveTrain();
 		driveTrain.addLeftSideMotor(leftFrontMotor);
 		driveTrain.addLeftSideMotor(leftBackMotor);
 		driveTrain.addRightSideMotor(rightFrontMotor);
 		driveTrain.addRightSideMotor(rightBackMotor);
 		driveTrain.setLeftSideEncoder(leftEncoder);
 		driveTrain.setRightSideEncoder(rightEncoder);
-	}
-	
-	@Override
-	public void initTopClaw(Claw topClaw) {
 		
+		return driveTrain;
 	}
 	
 	@Override
-	public void initBottomClaw(Claw bottomClaw) {
+	public Claw initTopClaw() {
+		return null;
+	}
+	
+	@Override
+	public Claw initBottomClaw() {
 		//Create all the motor controller objects
 		TalonSRXWrapper pitchMotor = new TalonSRXWrapper(RobotMap.bottomClawPitchControlPort);
 		DoubleSolenoid clawCylinder = new DoubleSolenoid(RobotMap.bottomClawSolenoidPort0, 
 														 RobotMap.bottomClawSolenoidPort1);
 		
 		//Create the new Claw subsystem
-		bottomClaw = new Claw(pitchMotor, clawCylinder, 1);
+		Claw bottomClaw = new Claw(pitchMotor, clawCylinder, 1);
+		return bottomClaw;
 	}
 
 	@Override
-	public void initWinch(Winch winch) {
+	public Winch initWinch() {
 		TalonSRXWrapper winchMotor = new TalonSRXWrapper(RobotMap.winchPort);
 
-		winch = new Winch(winchMotor);
+		Winch winch = new Winch(winchMotor);
+		return winch;
 	}
 	
 	@Override
-	public void initWinchArm(WinchArm winchArm) {
+	public WinchArm initWinchArm() {
 		TalonSRXWrapper winchArmMotor = new TalonSRXWrapper(RobotMap.winchArmPort);
 		
-		winchArm = new WinchArm(winchArmMotor);
+		WinchArm winchArm = new WinchArm(winchArmMotor);
+		return winchArm;
 	}
 }

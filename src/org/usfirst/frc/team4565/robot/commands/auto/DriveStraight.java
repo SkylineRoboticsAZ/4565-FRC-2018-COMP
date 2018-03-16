@@ -9,13 +9,15 @@ import org.usfirst.frc.team4565.robot.subsystems.DriveTrain;
 
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.interfaces.Gyro;
 
 public class DriveStraight extends Command {
 
 	private DriveTrain m_driveTrain;
 	private Encoder m_leftEncoder, m_rightEncoder;
+	private Gyro m_gyro;
 	private double m_goalRotations, m_leftRotations, m_rightRotations,
-				   m_oldLeftRotations, m_oldRightRotations;
+				   m_oldLeftRotations, m_oldRightRotations, m_angle;
 	private boolean m_reverse, m_stop = false;
 	private Timer m_timer;
 	
@@ -25,6 +27,7 @@ public class DriveStraight extends Command {
     	m_driveTrain = driveTrain;
     	m_leftEncoder = driveTrain.getLeftEncoder();
     	m_rightEncoder = driveTrain.getRightEncoder();
+    	m_gyro = driveTrain.getGyro();
     	m_goalRotations = AutoCalc.calculateRobotDrive(Math.abs(meters));
     	m_leftRotations = 0;
     	m_rightRotations = 0;
@@ -44,6 +47,7 @@ public class DriveStraight extends Command {
     protected void initialize() {
     	m_leftEncoder.reset();
     	m_rightEncoder.reset();
+    	m_angle = m_gyro.getAngle();
     	m_timer.start();
     }
 
@@ -62,10 +66,12 @@ public class DriveStraight extends Command {
     		rightMotorSpeed *= -1;
     	}
     	
-    	if (leftValue > rightValue) {
-    		leftMotorSpeed -= (leftValue - rightValue);
-    	} else if (rightValue > leftValue) {
-    		rightMotorSpeed -= (rightValue - leftValue);
+    	double angle = m_gyro.getAngle();
+    	
+    	if (angle < m_angle) {
+    		leftMotorSpeed -= (angle - m_angle);
+    	} else if (angle > m_angle) {
+    		rightMotorSpeed -= (m_angle - angle);
     	}
     	
     	m_driveTrain.setLeftDrive(leftMotorSpeed);

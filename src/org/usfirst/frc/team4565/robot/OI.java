@@ -74,6 +74,7 @@ public class OI {
 	}
 	
 	public void setDeviceEnabled(String name, boolean enabled) {
+		System.out.println(name + " State Changed: " + enabled);
 		m_devices.replace(name, enabled);
 	}
 	

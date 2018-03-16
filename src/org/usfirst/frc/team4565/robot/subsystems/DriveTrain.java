@@ -4,6 +4,7 @@ import org.usfirst.frc.team4565.robot.commands.drive.TeleopDrive;
 import org.usfirst.frc.team4565.robot.extensions.MotorControllerInterface;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.interfaces.Gyro;
 import edu.wpi.first.wpilibj.Encoder;
 
 import java.util.Iterator;
@@ -20,6 +21,7 @@ public class DriveTrain extends Subsystem {
 	private List<MotorControllerInterface> m_leftSideMotors,
 										   m_rightSideMotors;
 	private Encoder m_leftEncoder, m_rightEncoder;
+	private Gyro m_gyro;
 	
 	/**
 	 * Constructs a DriveTrain subsystem object
@@ -55,12 +57,20 @@ public class DriveTrain extends Subsystem {
 		m_rightEncoder = encoder;
 	}
 	
+	public void setGyro(Gyro gyro) {
+		m_gyro = gyro;
+	}
+	
 	public Encoder getLeftEncoder() {
 		return m_leftEncoder;
 	}
 	
 	public Encoder getRightEncoder() {
 		return m_rightEncoder;
+	}
+	
+	public Gyro getGyro() {
+		return m_gyro;
 	}
 	
 	/**
