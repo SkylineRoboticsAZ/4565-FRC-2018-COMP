@@ -69,9 +69,9 @@ public class DriveStraight extends Command {
     	double angle = m_gyro.getAngle();
     	
     	if (angle < m_angle) {
-    		leftMotorSpeed -= (angle - m_angle);
+    		leftMotorSpeed -= (angle - m_angle) * .1;
     	} else if (angle > m_angle) {
-    		rightMotorSpeed -= (m_angle - angle);
+    		rightMotorSpeed -= (m_angle - angle) * .1;
     	}
     	
     	m_driveTrain.setLeftDrive(leftMotorSpeed);
@@ -79,6 +79,12 @@ public class DriveStraight extends Command {
     	
     	m_leftRotations = leftValue;
     	m_rightRotations = rightValue;
+    	
+    	double percentComplete = ((leftValue + rightValue) * .5) / m_goalRotations;
+    	double easingFactor = AutoCalc.calculateEasingValue(percentComplete);
+    	
+    	leftMotorSpeed *= easingFactor;
+    	rightMotorSpeed *= easingFactor;
     	
     	if (!isMoving())
     		m_stop = true;

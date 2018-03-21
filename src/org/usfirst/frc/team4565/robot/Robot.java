@@ -12,10 +12,12 @@ import org.usfirst.frc.team4565.robot.subsystems.Claw;
 import org.usfirst.frc.team4565.robot.subsystems.Winch;
 import org.usfirst.frc.team4565.robot.subsystems.WinchArm;
 import org.usfirst.frc.team4565.robot.extensions.RobotBuilderInterface;
-import org.usfirst.frc.team4565.robot.commands.auto.DriveStraight;
 import org.usfirst.frc.team4565.robot.commands.auto.MiddleSwitchAuto;
+import org.usfirst.frc.team4565.robot.commands.auto.DriveStraight;
+import org.usfirst.frc.team4565.robot.commands.auto.DriveCurve;
 import org.usfirst.frc.team4565.robot.commands.auto.StraightAuto;
 import org.usfirst.frc.team4565.robot.commands.auto.TurnDegrees;
+import org.usfirst.frc.team4565.robot.commands.SCurve;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -134,7 +136,7 @@ public class Robot extends TimedRobot {
 			((MiddleSwitchAuto)m_autoCommand).init(gameData);
 			break;
 		case TestAuto:
-			m_autoCommand = new DriveStraight(kDriveTrain, 5);
+			m_autoCommand = new TurnDegrees(kDriveTrain, 90);
 			break;
 		default:
 			m_autoCommand = null;
