@@ -4,7 +4,6 @@ import org.usfirst.frc.team4565.robot.AutoCalc;
 import org.usfirst.frc.team4565.robot.RobotMap;
 import org.usfirst.frc.team4565.robot.subsystems.DriveTrain;
 
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.interfaces.Gyro;
@@ -15,8 +14,7 @@ public class TurnDegrees extends Command {
 	private Encoder m_leftEncoder, m_rightEncoder;
 	private Gyro m_gyro;
 	private double m_degrees, m_startingAngle, m_goalAngle;
-	private boolean m_turningRight, m_braking, m_finished;
-	private Timer m_brakeTimer;
+	private boolean m_turningRight;
 	
     public TurnDegrees(DriveTrain driveTrain, double degrees) {
         // Use requires() here to declare subsystem dependencies
@@ -27,10 +25,7 @@ public class TurnDegrees extends Command {
     	m_rightEncoder = driveTrain.getRightEncoder();
     	m_gyro = driveTrain.getGyro();
     	m_turningRight = (degrees >= 0 ? true : false);
-    	m_finished = false;
-    	m_brakeTimer = new Timer();
-    	m_braking = false;
-    	
+
     	requires(driveTrain);
     }
 

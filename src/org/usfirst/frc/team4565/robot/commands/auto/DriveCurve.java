@@ -17,9 +17,9 @@ public class DriveCurve extends Command {
 	private Encoder m_leftEncoder, m_rightEncoder;
 	private Gyro m_gyro;
 	private double m_turnRatio, m_degrees, m_startingAngle, m_goalAngle;
-	private boolean m_turningRight;
+	private boolean m_turningRight, m_reflectX;
 	
-    public DriveCurve(DriveTrain driveTrain, double radius, double degrees) {
+    public DriveCurve(DriveTrain driveTrain, double radius, double degrees, boolean reflectX) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	m_driveTrain = driveTrain;
@@ -28,12 +28,16 @@ public class DriveCurve extends Command {
     	m_gyro = driveTrain.getGyro();
     	m_degrees = degrees;
     	m_turningRight = (degrees >= 0 ? true : false);
+    	m_reflectX = reflectX;
+    	
+    	if(reflectX)
+    		m_degrees *= -1;
     	
     	//Calculate ratio
     	double absRadius = Math.abs(radius);
     	
     	if (absRadius <= RobotMap.robotDiameter) {
-    		System.out.println("DRIVE TURN ERROR: Radius less than or equal to robot's radius");
+    		System.out.println("DRIVE CURVE ERROR: Radius less than or equal to robot's radius");
     		m_turnRatio = -1;
     		return;
     	}
@@ -46,6 +50,10 @@ public class DriveCurve extends Command {
     	m_turnRatio = innerRadius / outerRadius;
     	
     	requires(driveTrain);
+    }
+    
+    public DriveCurve(DriveTrain driveTrain, double radius, double degrees) {
+    	this(driveTrain, radius, degrees, false);
     }
 
     // Called just before this Command runs the first time
@@ -60,8 +68,8 @@ public class DriveCurve extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	double leftValue = m_leftEncoder.getDistance();
-    	double rightValue = m_rightEncoder.getDistance();
+    	double leftValue = Math.abs(m_leftEncoder.getDistance());
+    	double rightValue = Math.abs(m_rightEncoder.getDistance());
     	
     	double experimentalRatio;
     	
@@ -99,6 +107,11 @@ public class DriveCurve extends Command {
     	leftMotorValue *= easingFactor;
     	rightMotorValue *= easingFactor;
     	
+    	if (m_reflectX) {
+    		leftMotorValue *= -1;
+    		rightMotorValue *= -1;
+    	}
+    	
     	m_driveTrain.setLeftDrive(leftMotorValue);
     	m_driveTrain.setRightDrive(rightMotorValue);
     }
@@ -109,10 +122,17 @@ public class DriveCurve extends Command {
     	
     	System.out.println("Current Angle: " + angle);
     	
-    	if (m_turningRight)
-    		return (angle >= m_goalAngle);
-    	else
-    		return (angle <= m_goalAngle);
+    	if (m_reflectX) {
+    		if (m_turningRight)
+    			return (angle <= m_goalAngle);
+        	else
+        		return (angle >= m_goalAngle);
+    	} else {
+    		if (m_turningRight)
+        		return (angle >= m_goalAngle);
+        	else
+        		return (angle <= m_goalAngle);
+    	}
     }
 
     // Called once after isFinished returns true

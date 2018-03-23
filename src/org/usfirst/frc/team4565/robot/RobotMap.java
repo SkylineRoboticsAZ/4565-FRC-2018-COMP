@@ -53,7 +53,7 @@ public class RobotMap {
     						   winchArmDeadband = .2;
     //Auto config
     public static final double autoStraightSpeed = .4,
-    						   autoTurnSpeed = .4,
+    						   autoTurnSpeed = .5,
     						   wheelDiameter = .1524,
     						   robotDiameter = .6096,
     						   autoClawPitchPulsePower = .75,
