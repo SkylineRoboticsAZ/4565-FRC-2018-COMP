@@ -28,9 +28,9 @@ public class SCurve extends CommandGroup {
         // e.g. if Command1 requires chassis, and Command2 requires arm,
         // a CommandGroup containing them would require both the chassis and the
         // arm.
-    	addSequential(new DriveCurve(driveTrain, 1, 45));
+    	addSequential(new DriveCurve(driveTrain, .8, 45));
     	addSequential(new DriveStraight(driveTrain, 1));
-    	addSequential(new DriveCurve(driveTrain, 1, -45));
+    	addSequential(new DriveCurve(driveTrain, .8, -45));
     	addSequential(new DriveStraight(driveTrain, 1));
     }
 }

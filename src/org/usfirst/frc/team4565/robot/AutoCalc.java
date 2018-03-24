@@ -4,8 +4,8 @@ import org.usfirst.frc.team4565.robot.RobotMap;
 
 public final class AutoCalc {
 	
-	private static final double[] poly = {-197.425, 880.424, -1626.07, 1599.69,
-										  -912.503, 308.304, -60.0615, 6.13717, .75};
+	private static final double[] poly = {-186.012, 713.046, -1167.53, 1065.54,
+										  -592.274, 205.122, -43.1791, 5.04464, .75};
 	private static final int polyLength = 9;
 	
 	private static final double distancePerRotation = RobotMap.wheelDiameter * Math.PI;
