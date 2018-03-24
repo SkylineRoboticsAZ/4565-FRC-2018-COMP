@@ -8,6 +8,7 @@
 package org.usfirst.frc.team4565.robot;
 
 import org.usfirst.frc.team4565.robot.triggers.TriggerTrigger;
+import org.usfirst.frc.team4565.robot.commands.ToggleTopClawWinchArm;
 import org.usfirst.frc.team4565.robot.commands.claw.ToggleClaw;
 import org.usfirst.frc.team4565.robot.commands.winch.TeleopWinchControl;
 
@@ -24,7 +25,7 @@ import java.util.Map;
 public class OI {
 	
 	private XboxController m_primaryController, m_secondaryController;
-	private Button m_winchButton, m_winchReverseButton;
+	private Button m_winchButton, m_winchReverseButton, m_toggleTopClawWinchArmButton;
 	private TriggerTrigger m_bottomClaw;
 	private boolean m_initialized = false;
 	
@@ -48,10 +49,13 @@ public class OI {
 
 		m_winchButton = new JoystickButton(m_secondaryController, 1);
 		m_winchReverseButton = new JoystickButton(m_secondaryController, 4);
+		m_toggleTopClawWinchArmButton = new JoystickButton(m_secondaryController, 3);
 		
 		m_bottomClaw.whenActive(new ToggleClaw(Robot.kBottomClaw));
 		m_winchButton.whileHeld(new TeleopWinchControl(Robot.kWinch));
 		m_winchReverseButton.whileHeld(new TeleopWinchControl(Robot.kWinch, true));
+		m_toggleTopClawWinchArmButton.whenPressed(new ToggleTopClawWinchArm(this, 
+				Robot.kTopClaw.getName(), Robot.kWinchArm.getName()));
 		
 		m_initialized = true;
 	}
@@ -61,10 +65,16 @@ public class OI {
 	}
 	
 	public boolean isDeviceEnabled(String name) {
-		return m_devices.get(name);
+		Boolean result = m_devices.get(name);
+		
+		if (result == null)
+			return false;
+		
+		return result;
 	}
 	
 	public void setDeviceEnabled(String name, boolean enabled) {
+		System.out.println(name + " State Changed: " + enabled);
 		m_devices.replace(name, enabled);
 	}
 	
