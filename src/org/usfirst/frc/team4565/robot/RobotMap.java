@@ -31,11 +31,13 @@ public class RobotMap {
 							rightEncoderPort1 = 3;
 	//Robot drive parameters
 	public static final double driveDeadband = .1,
-							   driverTurnDeadband = .2,
-                               driverTurnMultiplier = .5,
+							   driverTurnDeadband = .15,
+                               driverTurnMultiplier = .7,
                                driverClawDeadband = .1,
                                boostDisabledMultiplier = .5,
                                boostEnabledMultiplier = 1;
+	
+	public static final boolean driverTurnInverted = true;
 	//Bottom claw ports
 	public static final int bottomClawSolenoidPort0 = 2,
 							bottomClawSolenoidPort1 = 3,
@@ -52,8 +54,8 @@ public class RobotMap {
     						   winchArmMultiplier = .75,
     						   winchArmDeadband = .2;
     //Auto config
-    public static final double autoStraightSpeed = .4,
-    						   autoTurnSpeed = .5,
+    public static final double autoStraightSpeed = .6,
+    						   autoTurnSpeed = .6,
     						   wheelDiameter = .1524,
     						   robotDiameter = .6096,
     						   autoClawPitchPulsePower = .75,

@@ -1,6 +1,6 @@
 package org.usfirst.frc.team4565.robot.subsystems;
 
-import org.usfirst.frc.team4565.robot.commands.drive.TeleopDrive;
+import org.usfirst.frc.team4565.robot.commands.drive.SmoothTeleopDrive;
 import org.usfirst.frc.team4565.robot.extensions.MotorControllerInterface;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -77,7 +77,7 @@ public class DriveTrain extends Subsystem {
 	 * Initialize the default command for the subsystem
 	 */
     public void initDefaultCommand() {
-        setDefaultCommand(new TeleopDrive(this));
+        setDefaultCommand(new SmoothTeleopDrive(this));
     }
     
     public void setLeftDrive(double power) {

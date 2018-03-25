@@ -136,13 +136,13 @@ public class Robot extends TimedRobot {
 			((MiddleSwitchAuto)m_autoCommand).init(gameData);
 			break;
 		case TestAuto:
-			m_autoCommand = new SCurve(kDriveTrain);
+			m_autoCommand = new TurnDegrees(kDriveTrain, 90);
 			break;
 		default:
 			m_autoCommand = null;
 			break;
 		}
-			
+		
 		if (m_autoCommand != null)
 			m_autoCommand.start();
 
