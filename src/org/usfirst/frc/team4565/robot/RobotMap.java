@@ -45,6 +45,8 @@ public class RobotMap {
 	//Top claw ports
 	public static final int topClawSolenoidPort0 = 0,
 							topClawSolenoidPort1 = 1,
+							bottomClawPitchPistonPort0 = 4,
+							bottomClawPitchPistonPort1 = 5,
 							topClawPitchControlPort = 5;
     //Winch ports
     public static final int winchPort = 3,

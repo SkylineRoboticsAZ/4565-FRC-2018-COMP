@@ -1,6 +1,5 @@
 package org.usfirst.frc.team4565.robot.subsystems;
 
-import org.usfirst.frc.team4565.robot.commands.claw.TeleopClawPitchControl;
 import org.usfirst.frc.team4565.robot.extensions.MotorControllerInterface;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -16,17 +15,15 @@ public class Claw extends Subsystem {
 
 	private MotorControllerInterface m_pitchMotor;
 	private DoubleSolenoid m_clawCylinder;
-	private int m_controllerAxis;
 
 	/**
 	 * Constructs a new Claw subsystem object
 	 * @param pitchMotor the motor to use for pitch control
 	 * @param clawCylinder the solenoid to use for the claw
 	 */
-	public Claw(MotorControllerInterface pitchMotor, DoubleSolenoid clawCylinder, int controllerAxis) {
+	public Claw(MotorControllerInterface pitchMotor, DoubleSolenoid clawCylinder) {
 		m_pitchMotor = pitchMotor;
 		m_clawCylinder = clawCylinder;
-		m_controllerAxis = controllerAxis;
 		
 		//Default solenoid position
 		closeClaw();
@@ -62,7 +59,6 @@ public class Claw extends Subsystem {
 	 * Initialize the default command for the subsystem
 	 */
     public void initDefaultCommand() {
-    	setDefaultCommand(new TeleopClawPitchControl(this, m_controllerAxis));
     }
 }
 

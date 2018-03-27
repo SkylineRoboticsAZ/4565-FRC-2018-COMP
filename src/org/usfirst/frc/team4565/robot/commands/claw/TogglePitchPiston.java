@@ -1,7 +1,7 @@
 package org.usfirst.frc.team4565.robot.commands.claw;
 
 import org.usfirst.frc.team4565.robot.Robot;
-import org.usfirst.frc.team4565.robot.subsystems.Claw;
+import org.usfirst.frc.team4565.robot.subsystems.ScaleClaw;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -10,16 +10,16 @@ import edu.wpi.first.wpilibj.command.Command;
  * @author Skyline Robotics - Ian McDonough
  *
  */
-public class ToggleClaw extends Command {
+public class TogglePitchPiston extends Command {
 
-	private Claw m_claw;
+	private ScaleClaw m_scaleClaw;
 	
 	/**
 	 * Constructs a new ToggleClaw command object
 	 * @param claw The Claw object that will be modified
 	 */
-    public ToggleClaw(Claw claw) {
-    	m_claw = claw;
+    public TogglePitchPiston(ScaleClaw claw) {
+    	m_scaleClaw = claw;
     	
     	requires(claw);
     }
@@ -29,11 +29,11 @@ public class ToggleClaw extends Command {
      */
     // Called just before this Command runs the first time
     protected void initialize() {
-    	if (Robot.kOi.isDeviceEnabled(m_claw.getName())) {
-        	if (m_claw.isClawOpen())
-        		m_claw.closeClaw();
+    	if (Robot.kOi.isDeviceEnabled(m_scaleClaw.getName())) {
+        	if (m_scaleClaw.isPitchPistonExtended())
+        		m_scaleClaw.retractPitchPiston();
         	else
-        		m_claw.openClaw();
+        		m_scaleClaw.extendPitchPiston();
     	}
     }
 

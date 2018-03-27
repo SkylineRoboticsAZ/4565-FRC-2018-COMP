@@ -1,9 +1,11 @@
 package org.usfirst.frc.team4565.robot;
 
+import org.usfirst.frc.team4565.robot.commands.claw.TeleopClawPitchControl;
 import org.usfirst.frc.team4565.robot.extensions.RobotBuilderInterface;
 import org.usfirst.frc.team4565.robot.extensions.TalonSRXWrapper;
 import org.usfirst.frc.team4565.robot.subsystems.Claw;
 import org.usfirst.frc.team4565.robot.subsystems.DriveTrain;
+import org.usfirst.frc.team4565.robot.subsystems.ScaleClaw;
 import org.usfirst.frc.team4565.robot.subsystems.Winch;
 import org.usfirst.frc.team4565.robot.subsystems.WinchArm;
 
@@ -42,7 +44,7 @@ public class CompRobotBuilder implements RobotBuilderInterface {
 	}
 	
 	@Override
-	public Claw initTopClaw() {
+	public ScaleClaw initTopClaw() {
 		return null;
 	}
 	
@@ -54,7 +56,8 @@ public class CompRobotBuilder implements RobotBuilderInterface {
 														 RobotMap.bottomClawSolenoidPort1);
 		
 		//Create the new Claw subsystem
-		Claw bottomClaw = new Claw(pitchMotor, clawCylinder, 1);
+		Claw bottomClaw = new Claw(pitchMotor, clawCylinder);
+		bottomClaw.setDefaultCommand(new TeleopClawPitchControl(bottomClaw, 1));
 		return bottomClaw;
 	}
 

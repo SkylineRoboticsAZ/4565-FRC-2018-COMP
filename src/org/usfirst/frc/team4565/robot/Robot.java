@@ -8,16 +8,14 @@
 package org.usfirst.frc.team4565.robot;
 
 import org.usfirst.frc.team4565.robot.subsystems.DriveTrain;
+import org.usfirst.frc.team4565.robot.subsystems.ScaleClaw;
 import org.usfirst.frc.team4565.robot.subsystems.Claw;
 import org.usfirst.frc.team4565.robot.subsystems.Winch;
 import org.usfirst.frc.team4565.robot.subsystems.WinchArm;
 import org.usfirst.frc.team4565.robot.extensions.RobotBuilderInterface;
 import org.usfirst.frc.team4565.robot.commands.auto.MiddleSwitchAuto;
-import org.usfirst.frc.team4565.robot.commands.auto.DriveStraight;
-import org.usfirst.frc.team4565.robot.commands.auto.DriveCurve;
 import org.usfirst.frc.team4565.robot.commands.auto.StraightAuto;
 import org.usfirst.frc.team4565.robot.commands.auto.TurnDegrees;
-import org.usfirst.frc.team4565.robot.commands.SCurve;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -40,7 +38,8 @@ public class Robot extends TimedRobot {
 	}
 	
 	public static DriveTrain kDriveTrain;
-	public static Claw kBottomClaw, kTopClaw;
+	public static Claw kBottomClaw;
+	public static ScaleClaw kTopClaw;
 	public static Winch kWinch;
 	public static WinchArm kWinchArm;
 	public static OI kOi;
