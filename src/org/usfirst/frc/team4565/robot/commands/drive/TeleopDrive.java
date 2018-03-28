@@ -48,7 +48,7 @@ public class TeleopDrive extends Command {
             boolean useAccelerator, useDecelerator, useTurnFactor;
             useAccelerator = checkDeadband(accelerator, RobotMap.driveDeadband);
             useDecelerator = checkDeadband(decelerator, RobotMap.driveDeadband);
-            useTurnFactor = checkDeadband(turnFactor, RobotMap.driverTurnMultiplier);
+            useTurnFactor = checkDeadband(turnFactor, RobotMap.driverTurnDeadband);
 
             //Zero values that are within margin of error &
             // give backing up priority over going forward

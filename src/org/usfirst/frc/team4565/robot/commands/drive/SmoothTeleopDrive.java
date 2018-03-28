@@ -68,7 +68,7 @@ public class SmoothTeleopDrive extends Command {
             if (acceleration != 0) {
             	//Straight or curves
         		boolean turningRight = (turnFactor > 0);
-        		double turnMotorFactor = 1 - (2 * Math.abs(turnFactor));
+        		double turnMotorFactor = calcNeTurnFactor(turnFactor);
         		
         		if (acceleration < 0 && RobotMap.driverTurnInverted)
         			turningRight = !turningRight;
@@ -94,7 +94,19 @@ public class SmoothTeleopDrive extends Command {
     	}
     }
     
-    private double mergeValues(double value1, double value2, double deadband) {
+    private static double calcLinearTurnFactor(double x) {
+    	return 1 - (2 * Math.abs(x));
+    }
+    
+    private static final double a = -.395559;
+    private static final double b = 1.39556;
+    private static final double c = 1.80107;
+    
+    private static double calcNeTurnFactor(double x) {
+    	return a * Math.exp(c * Math.abs(x)) + b;
+    }
+    
+    private static double mergeValues(double value1, double value2, double deadband) {
         double netValue = 0;
         
         if (checkDeadband(value1, deadband))
@@ -105,7 +117,7 @@ public class SmoothTeleopDrive extends Command {
         return netValue;
     }
     
-    private boolean checkDeadband(double value, double deadband) {
+    private static boolean checkDeadband(double value, double deadband) {
     	//Check if the value is within the deadband
         return (value > deadband || value < -deadband);
     }
