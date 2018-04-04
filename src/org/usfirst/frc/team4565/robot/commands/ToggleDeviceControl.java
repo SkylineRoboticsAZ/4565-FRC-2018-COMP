@@ -7,27 +7,27 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class ToggleTopClawWinchArm extends Command {
+public class ToggleDeviceControl extends Command {
 
 	private OI m_oi;
-	private String m_topClawName, m_winchArmName;
+	private String m_device1, m_device2;
 	
-    public ToggleTopClawWinchArm(OI oi, String topClawName, String winchArmName) {
+    public ToggleDeviceControl(OI oi, String device1, String device2) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	m_oi = oi;
-    	m_topClawName = topClawName;
-    	m_winchArmName = winchArmName;
+    	m_device1 = device1;
+    	m_device2 = device2;
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	if (m_oi.isDeviceEnabled(m_topClawName)) {
-    		m_oi.setDeviceEnabled(m_topClawName, false);
-    		m_oi.setDeviceEnabled(m_winchArmName, true);
+    	if (m_oi.isDeviceEnabled(m_device1)) {
+    		m_oi.setDeviceEnabled(m_device1, false);
+    		m_oi.setDeviceEnabled(m_device2, true);
     	} else {
-    		m_oi.setDeviceEnabled(m_topClawName, true);
-    		m_oi.setDeviceEnabled(m_winchArmName, false);
+    		m_oi.setDeviceEnabled(m_device1, true);
+    		m_oi.setDeviceEnabled(m_device2, false);
     	}
     }
 

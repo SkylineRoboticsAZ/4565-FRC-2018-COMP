@@ -58,9 +58,11 @@ public class PracticeRobotBuilder implements RobotBuilderInterface {
 		DoubleSolenoid pitchPiston = new DoubleSolenoid(RobotMap.bottomClawPitchPistonPort0, 
 														  RobotMap.bottomClawPitchPistonPort1);
 		
+		pitchMotor.setInverted(true);
+		
 		//Create the new Claw subsystem
 		ScaleClaw topClaw = new ScaleClaw(pitchMotor, clawCylinder, pitchPiston);
-		topClaw.setDefaultCommand(new TeleopClawPitchControl(topClaw, 5));
+		topClaw.setDefaultCommand(new TeleopClawPitchControl(topClaw, 1));
 		return topClaw;
 	}
 	

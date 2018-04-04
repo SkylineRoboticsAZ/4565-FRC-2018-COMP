@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 public class ScaleClaw extends Claw {
 
 	private DoubleSolenoid m_positionCylinder;
-	
+	  
 	public ScaleClaw(MotorControllerInterface pitchMotor, DoubleSolenoid clawCylinder, DoubleSolenoid pitchPiston) {
 		super(pitchMotor, clawCylinder);
 		

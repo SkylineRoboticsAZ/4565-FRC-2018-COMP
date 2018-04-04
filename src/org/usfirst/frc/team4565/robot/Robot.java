@@ -88,6 +88,10 @@ public class Robot extends TimedRobot {
 		m_chooser.addObject("Middle Auto", Auto.Middle);
 		m_chooser.addObject("Test Auto", Auto.TestAuto);
 		SmartDashboard.putData("Auto Selection", m_chooser);
+		
+		kTopClaw.closeClaw();
+		kBottomClaw.openClaw();
+		kTopClaw.retractPitchPiston();
 	}
 
 	/**

@@ -24,9 +24,6 @@ public class Claw extends Subsystem {
 	public Claw(MotorControllerInterface pitchMotor, DoubleSolenoid clawCylinder) {
 		m_pitchMotor = pitchMotor;
 		m_clawCylinder = clawCylinder;
-		
-		//Default solenoid position
-		closeClaw();
 	}
 
 	/**
