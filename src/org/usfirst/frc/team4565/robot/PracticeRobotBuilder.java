@@ -55,8 +55,8 @@ public class PracticeRobotBuilder implements RobotBuilderInterface {
 		TalonSRXWrapper pitchMotor = new TalonSRXWrapper(RobotMap.topClawPitchControlPort);
 		DoubleSolenoid clawCylinder = new DoubleSolenoid(RobotMap.topClawSolenoidPort0, 
 														 RobotMap.topClawSolenoidPort1);
-		DoubleSolenoid pitchPiston = new DoubleSolenoid(RobotMap.bottomClawPitchPistonPort0, 
-														  RobotMap.bottomClawPitchPistonPort1);
+		DoubleSolenoid pitchPiston = new DoubleSolenoid(RobotMap.topClawPitchPistonPort0, 
+														  RobotMap.topClawPitchPistonPort1);
 		
 		pitchMotor.setInverted(true);
 		

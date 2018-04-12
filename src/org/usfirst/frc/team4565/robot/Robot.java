@@ -13,7 +13,9 @@ import org.usfirst.frc.team4565.robot.subsystems.Claw;
 import org.usfirst.frc.team4565.robot.subsystems.Winch;
 import org.usfirst.frc.team4565.robot.subsystems.WinchArm;
 import org.usfirst.frc.team4565.robot.extensions.RobotBuilderInterface;
+import org.usfirst.frc.team4565.robot.commands.auto.DriveCurve;
 import org.usfirst.frc.team4565.robot.commands.auto.MiddleSwitchAuto;
+import org.usfirst.frc.team4565.robot.commands.auto.ScaleAuto;
 import org.usfirst.frc.team4565.robot.commands.auto.StraightAuto;
 import org.usfirst.frc.team4565.robot.commands.auto.TurnDegrees;
 
@@ -23,6 +25,7 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.CameraServer;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -34,7 +37,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Robot extends TimedRobot {
 	
 	private enum Auto {
-		NoAuto, LeftSide, RightSide, Middle, TestAuto
+		NoAuto, LeftStraight, RightStraight, Middle, 
+		LeftScale, RightScale, TestAuto
 	}
 	
 	public static DriveTrain kDriveTrain;
@@ -44,8 +48,7 @@ public class Robot extends TimedRobot {
 	public static WinchArm kWinchArm;
 	public static OI kOi;
 	public static Command m_autoCommand;
-	
-	//private static Compressor m_compressor;
+	public static CameraServer m_camera;
 
 	SendableChooser<Auto> m_chooser = new SendableChooser<>();
 
@@ -83,14 +86,20 @@ public class Robot extends TimedRobot {
 		kOi.registerDevice(kWinchArm.getName(), true);
 		
 		m_chooser.addDefault("No Auto", Auto.NoAuto);
-		m_chooser.addObject("Left Drive Straight", Auto.LeftSide);
-		m_chooser.addObject("Right Drive Straight", Auto.RightSide);
+		m_chooser.addObject("Left Drive Straight", Auto.LeftStraight);
+		m_chooser.addObject("Right Drive Straight", Auto.RightStraight);
 		m_chooser.addObject("Middle Auto", Auto.Middle);
+		m_chooser.addObject("Left Scale Auto", Auto.LeftScale);
+		m_chooser.addObject("Right Scale Auto", Auto.RightScale);
 		m_chooser.addObject("Test Auto", Auto.TestAuto);
 		SmartDashboard.putData("Auto Selection", m_chooser);
 		
+		m_camera = CameraServer.getInstance();
+		m_camera.startAutomaticCapture(0);
+		m_camera.startAutomaticCapture(1);
+		
 		kTopClaw.closeClaw();
-		kBottomClaw.openClaw();
+		kBottomClaw.closeClaw();
 		kTopClaw.retractPitchPiston();
 	}
 
@@ -126,11 +135,11 @@ public class Robot extends TimedRobot {
 		String gameData = DriverStation.getInstance().getGameSpecificMessage();
 		
 		switch (m_chooser.getSelected()) {
-		case LeftSide:
+		case LeftStraight:
 			m_autoCommand = new StraightAuto(kDriveTrain, kBottomClaw, StraightAuto.Side.LeftSide);
 			((StraightAuto)m_autoCommand).init(gameData);
 			break;
-		case RightSide:
+		case RightStraight:
 			m_autoCommand = new StraightAuto(kDriveTrain, kBottomClaw, StraightAuto.Side.RightSide);
 			((StraightAuto)m_autoCommand).init(gameData);
 			break;
@@ -138,8 +147,16 @@ public class Robot extends TimedRobot {
 			m_autoCommand = new MiddleSwitchAuto(kDriveTrain, kBottomClaw);
 			((MiddleSwitchAuto)m_autoCommand).init(gameData);
 			break;
+		case LeftScale:
+			m_autoCommand = new ScaleAuto(kDriveTrain, kTopClaw, ScaleAuto.Side.LeftSide);
+			((ScaleAuto)m_autoCommand).init(gameData);
+			break;
+		case RightScale:
+			m_autoCommand = new ScaleAuto(kDriveTrain, kTopClaw, ScaleAuto.Side.RightSide);
+			((ScaleAuto)m_autoCommand).init(gameData);
+			break;
 		case TestAuto:
-			m_autoCommand = new TurnDegrees(kDriveTrain, 90);
+			m_autoCommand = new DriveCurve(kDriveTrain, .6858, -55);
 			break;
 		default:
 			m_autoCommand = null;

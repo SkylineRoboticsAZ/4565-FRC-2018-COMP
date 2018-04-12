@@ -43,37 +43,44 @@ public class MiddleSwitchAuto extends CommandGroup {
     	addSequential(new TurnDegrees(m_driveTrain, (m_side == SwitchSide.LeftSide ? 90 : -90)));
     	addSequential(new DriveStraight(m_driveTrain, 1.7));*/
     	
-    	addParallel(new SetClawPitch(m_claw, .3));
-    	addSequential(new DriveCurve(m_driveTrain, .6858, (m_side == SwitchSide.LeftSide ? -90 : 90)));
-    	addSequential(new DriveCurve(m_driveTrain, .6858, (m_side == SwitchSide.LeftSide ? 90 : -90)));
-    	addSequential(new DriveStraight(m_driveTrain, 2.5));
+    	addSequential(new SetClawPitch(m_claw, -.3));
+    	addSequential(new DriveCurve(m_driveTrain, .6858, (m_side == SwitchSide.LeftSide ? -73 : 70)));
+    	addSequential(new DriveCurve(m_driveTrain, .6858, (m_side == SwitchSide.LeftSide ? 60 : -63)));
+    	addSequential(new DriveStraight(m_driveTrain, 1));
+    	
+    	//addSequential(new DriveCurve(m_driveTrain, .6858, -55));
+    	//addSequential(new DriveCurve(m_driveTrain, .6858, 55));
     	
     	addSequential(new ClawPitchPulse(m_claw, true));
     	addSequential(new OpenClaw(m_claw));
     	addSequential(new Delay(.5));
     	addSequential(new ClawPitchPulse(m_claw));
-    	addParallel(new SetClawPitch(m_claw, .3));
+    	addSequential(new DriveStraight(m_driveTrain, -1));
+    	
+    	/*
+    	addParallel(new SetClawPitch(m_claw, -.3));
     	
     	addSequential(new DriveStraight(m_driveTrain, -1.0668));
-    	addSequential(new DriveCurve(m_driveTrain, .6858, (m_side == SwitchSide.LeftSide ? 90 : -90), false));
-    	addSequential(new DriveCurve(m_driveTrain, .6858, (m_side == SwitchSide.LeftSide ? -90 : 90), false));
+    	addSequential(new DriveCurve(m_driveTrain, .6858, (m_side == SwitchSide.LeftSide ? 45 : -45), false));
+    	addSequential(new DriveCurve(m_driveTrain, .6858, (m_side == SwitchSide.LeftSide ? -45 : 45), false));
     	addSequential(new DriveStraight(m_driveTrain, 1.3716));
     	
     	addSequential(new ClawPitchPulse(m_claw, true));
     	addSequential(new CloseClaw(m_claw));
     	addSequential(new Delay(.5));
     	addSequential(new ClawPitchPulse(m_claw));
-    	addParallel(new SetClawPitch(m_claw, .3));
+    	addParallel(new SetClawPitch(m_claw, -.3));
     	
     	addSequential(new DriveStraight(m_driveTrain, -1.3716));
-    	addSequential(new DriveCurve(m_driveTrain, .6858, (m_side == SwitchSide.LeftSide ? -90 : 90)));
-    	addSequential(new DriveCurve(m_driveTrain, .6858, (m_side == SwitchSide.LeftSide ? 90 : -90)));
+    	addSequential(new DriveCurve(m_driveTrain, .6858, (m_side == SwitchSide.LeftSide ? -45 : 45)));
+    	addSequential(new DriveCurve(m_driveTrain, .6858, (m_side == SwitchSide.LeftSide ? 45 : -45)));
     	addSequential(new DriveStraight(m_driveTrain, 1.2));
     	
     	addSequential(new ClawPitchPulse(m_claw, true));
     	addSequential(new OpenClaw(m_claw));
     	addSequential(new Delay(.5));
     	addSequential(new ClawPitchPulse(m_claw));
-    	addParallel(new SetClawPitch(m_claw, .3));
+    	addParallel(new SetClawPitch(m_claw, -.3));
+    	*/
     }
 }

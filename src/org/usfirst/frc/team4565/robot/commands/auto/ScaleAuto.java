@@ -47,5 +47,9 @@ public class ScaleAuto extends CommandGroup {
     	}
     	
     	//throw the cube here
+    	addSequential(new SetClawPitch(m_scaleClaw, .6));
+    	addSequential(new Delay(1.5));
+    	addSequential(new SetClawPitch(m_scaleClaw, 0));
+    	addSequential(new OpenClaw(m_scaleClaw));
     }
 }

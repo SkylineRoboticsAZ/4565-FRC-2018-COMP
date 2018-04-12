@@ -2,7 +2,6 @@ package org.usfirst.frc.team4565.robot.commands;
 
 import org.usfirst.frc.team4565.robot.OI;
 import org.usfirst.frc.team4565.robot.commands.ToggleDeviceControl;
-import org.usfirst.frc.team4565.robot.commands.auto.OpenClaw;
 import org.usfirst.frc.team4565.robot.subsystems.Claw;
 import org.usfirst.frc.team4565.robot.subsystems.ScaleClaw;
 

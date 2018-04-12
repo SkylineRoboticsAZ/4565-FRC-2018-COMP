@@ -1,6 +1,7 @@
 package org.usfirst.frc.team4565.robot;
 
 import org.usfirst.frc.team4565.robot.commands.claw.TeleopClawPitchControl;
+import org.usfirst.frc.team4565.robot.extensions.MotorGroup;
 import org.usfirst.frc.team4565.robot.extensions.RobotBuilderInterface;
 import org.usfirst.frc.team4565.robot.extensions.TalonSRXWrapper;
 import org.usfirst.frc.team4565.robot.subsystems.Claw;
@@ -9,6 +10,7 @@ import org.usfirst.frc.team4565.robot.subsystems.ScaleClaw;
 import org.usfirst.frc.team4565.robot.subsystems.Winch;
 import org.usfirst.frc.team4565.robot.subsystems.WinchArm;
 
+import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.CounterBase.EncodingType;
@@ -31,6 +33,8 @@ public class CompRobotBuilder implements RobotBuilderInterface {
 		Encoder leftEncoder = new Encoder(RobotMap.leftEncoderPort0, RobotMap.leftEncoderPort1, true, EncodingType.k4X);
 		Encoder rightEncoder = new Encoder(RobotMap.rightEncoderPort0, RobotMap.rightEncoderPort1, false, EncodingType.k4X);
 		
+		ADXRS450_Gyro gyro = new ADXRS450_Gyro();
+		
 		//Create the DriveTrain subsystem
 		DriveTrain driveTrain = new DriveTrain();
 		driveTrain.addLeftSideMotor(leftFrontMotor);
@@ -39,13 +43,32 @@ public class CompRobotBuilder implements RobotBuilderInterface {
 		driveTrain.addRightSideMotor(rightBackMotor);
 		driveTrain.setLeftSideEncoder(leftEncoder);
 		driveTrain.setRightSideEncoder(rightEncoder);
+		driveTrain.setGyro(gyro);
 		
 		return driveTrain;
 	}
 	
 	@Override
 	public ScaleClaw initTopClaw() {
-		return null;
+		//Create all the motor controller objects
+		TalonSRXWrapper pitchMotor = new TalonSRXWrapper(RobotMap.topClawPitchControlPort);
+		TalonSRXWrapper secondPitchMotor = new TalonSRXWrapper(RobotMap.topClawPitchControlPort1);
+		
+		MotorGroup group = new MotorGroup();
+		
+		group.addMotor(pitchMotor);
+		group.addMotor(secondPitchMotor);
+		group.setInverted(true);
+		
+		DoubleSolenoid clawCylinder = new DoubleSolenoid(RobotMap.topClawSolenoidPort0, 
+														 RobotMap.topClawSolenoidPort1);
+		DoubleSolenoid pitchPiston = new DoubleSolenoid(RobotMap.topClawPitchPistonPort0, 
+														  RobotMap.topClawPitchPistonPort1);
+		
+		//Create the new Claw subsystem
+		ScaleClaw topClaw = new ScaleClaw(group, clawCylinder, pitchPiston);
+		topClaw.setDefaultCommand(new TeleopClawPitchControl(topClaw, 1));
+		return topClaw;
 	}
 	
 	@Override
@@ -54,6 +77,8 @@ public class CompRobotBuilder implements RobotBuilderInterface {
 		TalonSRXWrapper pitchMotor = new TalonSRXWrapper(RobotMap.bottomClawPitchControlPort);
 		DoubleSolenoid clawCylinder = new DoubleSolenoid(RobotMap.bottomClawSolenoidPort0, 
 														 RobotMap.bottomClawSolenoidPort1);
+		
+		pitchMotor.setInverted(true);
 		
 		//Create the new Claw subsystem
 		Claw bottomClaw = new Claw(pitchMotor, clawCylinder);

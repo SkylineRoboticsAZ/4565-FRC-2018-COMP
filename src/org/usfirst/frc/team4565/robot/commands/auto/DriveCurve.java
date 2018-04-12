@@ -100,7 +100,7 @@ public class DriveCurve extends Command {
     			leftMotorValue += m_turnRatio - experimentalRatio;
     	}
     	
-    	double angle = m_gyro.getAngle();
+    	double angle = readAngle();
     	double percentComplete = AutoCalc.calculatePercentAngle(m_startingAngle, angle, m_goalAngle);
     	double easingFactor = AutoCalc.calculateEasingValue(percentComplete);
     	
@@ -118,9 +118,7 @@ public class DriveCurve extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	double angle = m_gyro.getAngle();
-    	
-    	System.out.println("Current Angle: " + angle);
+    	double angle = readAngle();
     	
     	if (m_reflectX) {
     		if (m_turningRight)
@@ -142,5 +140,15 @@ public class DriveCurve extends Command {
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
+    }
+    
+    private double readAngle() {
+    	double angle = m_gyro.getAngle();
+    	
+    	if (m_turningRight && angle < m_startingAngle || !m_turningRight && angle > m_startingAngle) {
+    		angle = m_startingAngle;
+    	}
+    	
+    	return angle;
     }
 }

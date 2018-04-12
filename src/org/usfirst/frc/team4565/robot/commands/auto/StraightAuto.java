@@ -48,11 +48,11 @@ public class StraightAuto extends CommandGroup {
     	if (sideString.length() != 0)
     		switchSide = (sideString.charAt(0) == 'L' ? Side.LeftSide : Side.RightSide);
     	
-    	addParallel(new SetClawPitch(m_claw, .3));
+    	addParallel(new SetClawPitch(m_claw, -.3));
     	addSequential(new DriveStraight(m_driveTrain, 3.6));
     	
     	if (switchSide != null && m_side == switchSide) {
-    		addSequential(new TurnDegrees(m_driveTrain, (m_side == Side.LeftSide ? 90 : -90)));
+    		addSequential(new TurnDegrees(m_driveTrain, (m_side == Side.LeftSide ? 80 : -80)));
     		addSequential(new DriveStraight(m_driveTrain, 1));
         	addSequential(new ClawPitchPulse(m_claw, true));
         	addSequential(new OpenClaw(m_claw));

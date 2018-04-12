@@ -66,13 +66,17 @@ public class DriveStraight extends Command {
     		rightMotorSpeed *= -1;
     	}
     	
-    	double angle = m_gyro.getAngle();
+    	/*double angle = m_gyro.getAngle();
     	
     	if (angle < m_angle) {
-    		leftMotorSpeed -= (angle - m_angle) * .1;
+    		double test = (angle - m_angle) * .1;
+    		leftMotorSpeed -= test;
+    		System.out.println("Angle < m_angle" + test);
     	} else if (angle > m_angle) {
-    		rightMotorSpeed -= (m_angle - angle) * .1;
-    	}
+    		double test = (m_angle - angle) * .1;
+    		rightMotorSpeed -= test;
+    		System.out.println("Angle > m_angle" + test);
+    	}*/
     	
     	m_driveTrain.setLeftDrive(leftMotorSpeed);
     	m_driveTrain.setRightDrive(rightMotorSpeed);

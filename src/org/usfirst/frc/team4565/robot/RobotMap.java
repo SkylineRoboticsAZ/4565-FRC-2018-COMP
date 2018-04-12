@@ -14,17 +14,17 @@ package org.usfirst.frc.team4565.robot;
  * floating around.
  */
 public class RobotMap {
-	public static final String robotType = "practice";
+	public static final String robotType = "competition";
     //User controllers
 	public static final int primaryJoystickPort = 0,
 							secondaryJoystickPort = 1;
 	//Secondary controller variables
-	public static final double xboxTriggerDeadband = .5;
+	public static final double xboxTriggerDeadband = .3;
 	//Robot drive motors
 	public static final int leftFrontDriveMotor = 4,
-							leftBackDriveMotor = 3,
-							rightFrontDriveMotor = 1,
-							rightBackDriveMotor = 0,
+							leftBackDriveMotor = 5,
+							rightFrontDriveMotor = 8,
+							rightBackDriveMotor = 9,
 							leftEncoderPort0 = 0,
 							leftEncoderPort1 = 1,
 							rightEncoderPort0 = 2,
@@ -36,32 +36,31 @@ public class RobotMap {
                                driverClawDeadband = .1,
                                boostDisabledMultiplier = .5,
                                boostEnabledMultiplier = 1;
-	
 	public static final boolean driverTurnInverted = true;
 	//Bottom claw ports
-	public static final int bottomClawSolenoidPort0 = 2,
-							bottomClawSolenoidPort1 = 3,
+	public static final int bottomClawSolenoidPort0 = 7,
+							bottomClawSolenoidPort1 = 0,
 							bottomClawPitchControlPort = 2;
 	//Top claw ports
-	public static final int topClawSolenoidPort0 = 0,
+	public static final int topClawSolenoidPort0 = 6,
 							topClawSolenoidPort1 = 1,
-							bottomClawPitchPistonPort0 = 4,
-							bottomClawPitchPistonPort1 = 5,
-							topClawPitchControlPort = 5;
+							topClawPitchPistonPort0 = 2,
+							topClawPitchPistonPort1 = 5,
+							topClawPitchControlPort = 3,
+							topClawPitchControlPort1 = 10;
     //Winch ports
-    public static final int winchPort = 3,
-    						winchArmPort = 4;
+    public static final int winchPort = 7,
+    						winchArmPort = 6;
 	//Winch variables
     public static final double winchPower = 1,
     						   winchArmMultiplier = .75,
     						   winchArmDeadband = .2;
     //Auto config
-    public static final double autoStraightSpeed = .6,
+    public static final double autoStraightSpeed = .2,
     						   autoTurnSpeed = .6,
     						   wheelDiameter = .1524,
     						   robotDiameter = .6096,
     						   autoClawPitchPulsePower = .75,
     						   autoClawPitchPulseTime = .75,
-    						   autoDriveStopDistance = .05,
-    						   autoBrakeTime = .25;
+    						   autoDriveStopDistance = .05;
 }
